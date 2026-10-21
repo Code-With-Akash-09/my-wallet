@@ -1,7 +1,12 @@
+import QueryClientProvider from "./query-Client";
 import ThemeProvider from "./theme-Provider";
 
 const RootProvider = ({ children }) => {
-    return <ThemeProvider>{children}</ThemeProvider>;
+    return (
+        <QueryClientProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+        </QueryClientProvider>
+    );
 };
 
 export default RootProvider;
