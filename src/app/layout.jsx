@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import RootProvider from "@/providers/root-Provider";
 import { DM_Sans, Geist, Geist_Mono, Roboto } from "next/font/google";
 import "./globals.css";
 
@@ -37,8 +38,11 @@ export default function RootLayout({ children }) {
                 dmSans.variable,
                 robotoHeading.variable,
             )}
+            suppressHydrationWarning
         >
-            <body className="min-h-full flex flex-col">{children}</body>
+            <body className="min-h-screen flex flex-col w-full overflow-x-hidden">
+                <RootProvider>{children}</RootProvider>
+            </body>
         </html>
     );
 }
