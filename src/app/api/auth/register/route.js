@@ -73,9 +73,9 @@ export const POST = async (request) => {
             updatedAt: new Date(),
         };
 
-        const result = await users_coll.insertOne(data);
+        await users_coll.insertOne(data);
 
-        await createSession(result.insertedId);
+        await createSession(data.userId);
 
         return NextResponse.json(
             { success: true, message: "Account created successfully." },
