@@ -1,5 +1,3 @@
-"use server";
-
 import { fetchClient } from "@/service/fetchClient";
 
 export const register = async (body) => {
