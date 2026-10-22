@@ -3,6 +3,7 @@ import "server-only";
 import argon2 from "argon2";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { createHash, randomBytes } from "node:crypto";
 
 import { getAuthCollections } from "@/lib/auth/auth-db";
@@ -90,6 +91,8 @@ export async function getCurrentUser() {
 
     if (!token) return null;
 
+    await connection();
+
     const { sessions, users } = await getAuthCollections();
 
     const session = await sessions.findOne({
@@ -110,6 +113,7 @@ export async function getCurrentUser() {
 
     return {
         userId: user.userId,
+        name: user.name,
         email: user.email,
         createdAt: user.createdAt,
     };
@@ -119,7 +123,7 @@ export async function requireUser() {
     const user = await getCurrentUser();
 
     if (!user) {
-        redirect("/login");
+        redirect("/auth");
     }
 
     return user;
