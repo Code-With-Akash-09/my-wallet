@@ -63,7 +63,9 @@ export const POST = async (request) => {
         const users_coll = await usersColl();
 
         const user = await users_coll.findOne({ email });
-        const valid = verifyAccountPassword(user.password, password);
+        const valid = user
+            ? await verifyAccountPassword(user.password, password)
+            : false;
 
         if (!user || !valid) {
             return NextResponse.json(
